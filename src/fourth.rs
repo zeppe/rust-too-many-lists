@@ -125,24 +125,29 @@ impl<T> DoubleEndedIterator for IntoIter<T> {
     }
 }
 
-pub struct Iter<'a, T>(Option<Ref<'a, Node<T>>>);
+// pub struct Iter<'a, T>(Option<Ref<'a, Node<T>>>);
 
-impl<'a, T> List<T> {
-    pub fn iter(&'a self) -> Iter<'a, T> {
-        Iter(self.head.as_ref().map(|x| x.borrow()))
-    }
-}
+// impl<'a, T> List<T> {
+//     pub fn iter(&'a self) -> Iter<'a, T> {
+//         Iter(self.head.as_ref().map(|x| x.borrow()))
+//     }
+// }
 
-impl<'a, T> Iterator for Iter<'a, T> {
-    type Item = Ref<'a, T>;
-    fn next(&mut self) -> Option<Self::Item> {
-        let ret: Option<Self::Item> = self.0.as_ref().map(|&x| Ref::map(x, |n| &n.elem));
-        self.0.take().map(|x| {
-            self.0 = x.next.as_ref().map(|m| m.borrow());
-        });
-        ret
-    }
-}
+// impl<'a, T> Iterator for Iter<'a, T> {
+//     type Item = Ref<'a, T>;
+//     fn next(&mut self) -> Option<Self::Item> {
+//         let ret: Option<Self::Item> = self.0.as_ref().map(|x| Ref::map(Ref::clone(x), |n| &n.elem));
+//         let next: Link<T> = self.0.as_ref().map(|x| x.next.clone())?;
+//         match next {
+//             Some(node) => {
+//                 self.0 = Some(node.borrow());
+//             },
+//             None => { self.0 = None; }
+
+//         }
+//         ret
+//     }
+// }
 
 #[cfg(test)]
 mod test {
